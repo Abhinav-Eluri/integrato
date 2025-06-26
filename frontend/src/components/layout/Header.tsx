@@ -36,14 +36,14 @@ const Header: React.FC = () => {
           {/* Left side */}
           <div className="flex items-center space-x-6">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">A</span>
-              </div>
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
-                App
-              </span>
-            </Link>
+            <Link to="/" className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-primary to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+            <span className="text-white font-bold text-xl">I</span>
+          </div>
+          <span className="text-2xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+            Integrato
+          </span>
+        </Link>
             
             {/* Home link next to logo */}
             <Link
