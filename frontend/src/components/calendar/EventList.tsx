@@ -222,7 +222,7 @@ const EventList: React.FC<EventListProps> = ({
                     {/* Event metadata */}
                     <div className="flex items-center justify-between mt-3">
                       <div className="flex items-center space-x-3 text-xs text-gray-500">
-                        <span>ID: {event.provider_event_id.substring(0, 8)}...</span>
+                        <span>ID: {event.provider_event_id ? event.provider_event_id.substring(0, 8) : 'N/A'}...</span>
                         {event.is_all_day && (
                           <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 text-green-800">
                             All Day

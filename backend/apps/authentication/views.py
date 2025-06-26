@@ -370,8 +370,8 @@ def google_oauth(request):
         user_serializer = UserSerializer(user)
         
         return Response({
-            'access_token': str(access_token),
-            'refresh_token': str(refresh),
+            'access': str(access_token),
+            'refresh': str(refresh),
             'user': user_serializer.data
         }, status=200)
         

@@ -23,6 +23,17 @@ backend/.env.development.local
 backend/.env.test.local
 backend/.env.production.local
 
+# Integration-specific environment files
+backend/.env.calendly
+backend/.env.github-slack
+backend/.env.google
+backend/.env.microsoft
+backend/.env.slack
+backend/.env.github
+backend/.env.notion
+backend/.env.trello
+backend/.env.zoom
+
 # Build outputs
 dist/
 build/

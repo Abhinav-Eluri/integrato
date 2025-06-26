@@ -12,57 +12,53 @@ export class AuthService {
   // Authentication endpoints
   static async login(credentials: LoginCredentials): Promise<AuthResponse> {
     try {
-      const response = await apiClient.post<AuthResponse>('/auth/login/', credentials);
-      console.log('Login response received:', response);
+      const apiResponse = await apiClient.post<AuthResponse>('/auth/login/', credentials);
       
       // Check if response has expected structure
-      if (!response) {
+      if (!apiResponse) {
         throw new Error('No response received');
       }
       
+      const response = apiResponse;
+      
       // Store tokens
-      if (response.data.access && response.data.refresh) {
+      if (response && response.access && response.refresh) {
         TokenManager.setTokens({
-          access: response.data.access,
-          refresh: response.data.refresh,
-        });
-        console.log('Tokens stored successfully');
-      } else {
-        console.warn('Missing tokens in response:', {
-          access: response.data.access,
-          refresh: response.data.refresh
+          access: response.access,
+          refresh: response.refresh,
         });
       }
       
       // Store user data
-      if (response.data.user) {
-        this.setStoredUser(response.data.user);
+      if (response && response.user) {
+        this.setStoredUser(response.user);
       }
       
-      return response.data;
+      return response;
     } catch (error) {
-      console.error('AuthService.login error:', error);
       throw error;
     }
   }
 
   static async register(data: RegisterData): Promise<AuthResponse> {
-    const response = await apiClient.post<AuthResponse>('/auth/register/', data);
+    const apiResponse = await apiClient.post<AuthResponse>('/auth/register/', data);
+       
+       const response = apiResponse;
     
     // Store tokens
-    if (response.data.access && response.data.refresh) {
+    if (response.access && response.refresh) {
       TokenManager.setTokens({
-        access: response.data.access,
-        refresh: response.data.refresh,
+        access: response.access,
+        refresh: response.refresh,
       });
     }
     
     // Store user data
-    if (response.data.user) {
-      this.setStoredUser(response.data.user);
+    if (response.user) {
+      this.setStoredUser(response.user);
     }
     
-    return response.data;
+    return response;
   }
 
   static async logout(): Promise<void> {
@@ -81,8 +77,8 @@ export class AuthService {
   }
 
   static async getCurrentUser(): Promise<User> {
-    const response = await apiClient.get<User>('/auth/user/');
-    return response.data;
+    const apiResponse = await apiClient.get<User>('/auth/user/');
+       return apiResponse;
   }
 
   static async refreshToken(): Promise<AuthTokens> {
@@ -92,13 +88,15 @@ export class AuthService {
       throw new Error('No refresh token available');
     }
 
-    const response = await apiClient.post<{ access: string }>('/auth/token/refresh/', {
-      refresh: refreshToken,
-    });
+    const apiResponse = await apiClient.post<{ access: string; refresh?: string }>('/auth/token/refresh/', {
+         refresh: refreshToken,
+       });
+       
+       const response = apiResponse;
 
     const tokens = {
-      access: response.data.access,
-      refresh: refreshToken,
+      access: response.access,
+      refresh: response.refresh || refreshToken, // Use new refresh token if provided
     };
 
     TokenManager.setTokens(tokens);
@@ -107,19 +105,19 @@ export class AuthService {
 
   // Password management
   static async changePassword(data: ChangePasswordFormData): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>('/auth/change-password/', {
+    const apiResponse = await apiClient.post<{ message: string }>('/auth/change-password/', {
       old_password: data.old_password,
       new_password: data.new_password1,
       confirm_password: data.new_password2,
     });
-    return response.data;
+    return apiResponse;
   }
 
   static async requestPasswordReset(email: string): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>('/auth/password-reset/', {
+    const apiResponse = await apiClient.post<{ message: string }>('/auth/password-reset/', {
       email,
     });
-    return response.data;
+    return apiResponse;
   }
 
   static async confirmPasswordReset(
@@ -128,39 +126,47 @@ export class AuthService {
     newPassword: string,
     confirmPassword: string
   ): Promise<{ message: string }> {
-    const response = await apiClient.post<{ message: string }>(
+    const apiResponse = await apiClient.post<{ message: string }>(
       `/auth/password-reset-confirm/${uidb64}/${token}/`,
       { 
         new_password: newPassword,
         confirm_password: confirmPassword
       }
     );
-    return response.data;
+    return apiResponse;
   }
 
   // Social authentication
   static async googleLogin(accessToken: string): Promise<AuthResponse> {
     try {
-      const response = await apiClient.post<AuthResponse>('/auth/google/', {
+   const apiResponse = await apiClient.post<AuthResponse>('/auth/google-oauth/', {
         access_token: accessToken,
       });
       
-      // Store tokens
-      if (response.data.access && response.data.refresh) {
-        TokenManager.setTokens({
-          access: response.data.access,
-          refresh: response.data.refresh,
-        });
+      const response = apiResponse;
+      
+      // Validate response structure
+      if (!response) {
+        throw new Error('No data received from server');
       }
+      
+      if (!response.access || !response.refresh) {
+        throw new Error('Invalid response: missing access or refresh token');
+      }
+      
+      // Store tokens
+      TokenManager.setTokens({
+        access: response.access,
+        refresh: response.refresh,
+      });
       
       // Store user data
-      if (response.data.user) {
-        this.setStoredUser(response.data.user);
+      if (response.user) {
+        this.setStoredUser(response.user);
       }
       
-      return response.data;
-    } catch (error) {
-      console.error('AuthService.googleLogin error:', error);
+      return response;
+    } catch (error: any) {
       throw error;
     }
   }

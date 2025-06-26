@@ -17,6 +17,9 @@ class Integration(models.Model):
         ('google_gmail', 'Gmail'),
         ('microsoft_calendar', 'Microsoft Calendar'),
         ('microsoft_outlook', 'Microsoft Outlook'),
+        ('github', 'GitHub'),
+        ('slack', 'Slack'),
+        ('calendly', 'Calendly'),
     ]
     
     STATUS_CHOICES = [

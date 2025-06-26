@@ -26,6 +26,6 @@ urlpatterns = [
     path('google/', include('allauth.socialaccount.providers.google.urls')),
     
     # Custom Google OAuth endpoint
-    path('google/', views.google_oauth, name='google_oauth'),
+    path('google-oauth/', views.google_oauth, name='google_oauth'),
 
 ]

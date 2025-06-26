@@ -64,6 +64,12 @@ const Header: React.FC = () => {
                 Integrations
               </Link>
               <Link
+                to="/integrations/github/repositories"
+                className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+              >
+                Repositories
+              </Link>
+              <Link
                 to="/calendar"
                 className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
               >
@@ -254,6 +260,13 @@ const Header: React.FC = () => {
                     className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
                   >
                     Integrations
+                  </Link>
+                  <Link
+                    to="/integrations/github/repositories"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+                  >
+                    Repositories
                   </Link>
                   <Link
                     to="/calendar"

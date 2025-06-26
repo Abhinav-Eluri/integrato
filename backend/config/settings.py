@@ -197,7 +197,7 @@ SIMPLE_JWT = {
 # CORS settings
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:5173,http://127.0.0.1:5173',
+    default='http://localhost:5173,http://127.0.0.1:5173,http://localhost:5174,http://127.0.0.1:5174',
     cast=lambda v: [s.strip() for s in v.split(',')]
 )
 
@@ -214,6 +214,19 @@ CORS_ALLOWED_HEADERS = [
     'x-csrftoken',
     'x-requested-with',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = False  # Keep this False for security
+CORS_ALLOWED_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+# Allow preflight requests
+CORS_PREFLIGHT_MAX_AGE = 86400
 
 # Django Allauth
 SITE_ID = 1
@@ -333,3 +346,21 @@ LOGGING = {
 
 # Encryption key for storing tokens securely
 ENCRYPTION_KEY = config('ENCRYPTION_KEY', default=None)
+
+# Microsoft OAuth Settings
+MICROSOFT_CLIENT_ID = config('MICROSOFT_CLIENT_ID', default='')
+MICROSOFT_CLIENT_SECRET = config('MICROSOFT_CLIENT_SECRET', default='')
+
+# GitHub OAuth Settings
+GITHUB_CLIENT_ID = config('GITHUB_CLIENT_ID', default='')
+GITHUB_CLIENT_SECRET = config('GITHUB_CLIENT_SECRET', default='')
+
+# Slack OAuth Settings
+SLACK_CLIENT_ID = config('SLACK_CLIENT_ID', default='')
+SLACK_CLIENT_SECRET = config('SLACK_CLIENT_SECRET', default='')
+
+# Calendly OAuth Settings
+CALENDLY_CLIENT_ID = config('CALENDLY_CLIENT_ID', default='')
+CALENDLY_CLIENT_SECRET = config('CALENDLY_CLIENT_SECRET', default='')
+CALENDLY_REDIRECT_URI = config('CALENDLY_REDIRECT_URI', default='')
+CALENDLY_SCOPES = config('CALENDLY_SCOPES', default='default')

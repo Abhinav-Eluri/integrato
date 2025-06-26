@@ -57,18 +57,23 @@ const LoginPage: React.FC = () => {
     onSuccess: async (tokenResponse) => {
       try {
         const response = await AuthService.googleLogin(tokenResponse.access_token);
+        
+        // Validate response structure
+        if (!response || !response.access || !response.refresh || !response.user) {
+          throw new Error('Invalid response structure from server');
+        }
+        
         // Update Redux store with user and tokens
         dispatch(setAuth({ user: response.user, tokens: { access: response.access, refresh: response.refresh } }));
         showSuccess('Login Successful', 'Welcome back!');
         const from = (location.state as any)?.from?.pathname || '/';
         navigate(from, { replace: true });
       } catch (error: any) {
-        console.error('Google login error:', error);
-        showError('Google Login Failed', error.response?.data?.detail || 'An error occurred during Google login');
+        const errorMessage = error.response?.data?.error || error.response?.data?.detail || error.message || 'An error occurred during Google login';
+        showError('Google Login Failed', errorMessage);
       }
     },
-    onError: (error) => {
-      console.error('Google OAuth error:', error);
+    onError: (_error) => {
       showError('Google Login Failed', 'Failed to authenticate with Google');
     },
   });

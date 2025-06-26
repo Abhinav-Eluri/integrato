@@ -78,12 +78,14 @@ api.interceptors.response.use(
       try {
         const refreshToken = TokenManager.getRefreshToken();
         if (refreshToken) {
-          const response = await axios.post(`${API_BASE_URL}/auth/token/refresh/`, {
+          // Use a separate axios instance without interceptors to avoid infinite loops
+          const refreshResponse = await axios.create().post(`${API_BASE_URL}/auth/token/refresh/`, {
             refresh: refreshToken,
           });
 
-          const { access } = response.data;
-          TokenManager.setTokens({ access, refresh: refreshToken });
+          const { access, refresh: newRefreshToken } = refreshResponse.data;
+          // Use the new refresh token if provided (token rotation), otherwise keep the old one
+          TokenManager.setTokens({ access, refresh: newRefreshToken || refreshToken });
 
           // Retry the original request with new token
           originalRequest.headers.Authorization = `Bearer ${access}`;
@@ -114,19 +116,19 @@ export interface ApiError {
 
 // Generic API methods
 export const apiClient = {
-  get: <T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+  get: <T = any>(url: string, config?: AxiosRequestConfig): Promise<T> =>
     api.get(url, config).then((response) => response.data),
 
-  post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+  post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> =>
     api.post(url, data, config).then((response) => response.data),
 
-  put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+  put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> =>
     api.put(url, data, config).then((response) => response.data),
 
-  patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+  patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> =>
     api.patch(url, data, config).then((response) => response.data),
 
-  delete: <T = any>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> =>
+  delete: <T = any>(url: string, config?: AxiosRequestConfig): Promise<T> =>
     api.delete(url, config).then((response) => response.data),
 };
 

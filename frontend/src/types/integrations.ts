@@ -27,7 +27,7 @@ export interface Provider {
   name: string;
   description: string;
   icon: string;
-  type: 'calendar' | 'email';
+  type: 'calendar' | 'email' | 'development' | 'communication' | 'scheduling';
   available: boolean;
 }
 
@@ -80,4 +80,86 @@ export interface OAuthCallbackData {
 
 export interface ManualSyncData {
   sync_type: 'calendar' | 'email' | 'full';
+}
+
+export interface GitHubRepository {
+  id: number;
+  name: string;
+  full_name: string;
+  description: string | null;
+  private: boolean;
+  fork: boolean;
+  html_url: string;
+  clone_url: string;
+  ssh_url: string;
+  language: string | null;
+  stargazers_count: number;
+  forks_count: number;
+  open_issues_count: number;
+  default_branch: string;
+  created_at: string;
+  updated_at: string;
+  pushed_at: string;
+  size: number;
+  owner: {
+    login: string;
+    id: number;
+    avatar_url: string;
+    html_url: string;
+  };
+}
+
+export interface GitHubRepositoryCreateData {
+  name: string;
+  description?: string;
+  private?: boolean;
+  auto_init?: boolean;
+  gitignore_template?: string;
+  license_template?: string;
+}
+
+export interface GitHubBranch {
+  name: string;
+  commit: {
+    sha: string;
+    url: string;
+  };
+  protected: boolean;
+}
+
+export interface GitHubCommit {
+  sha: string;
+  commit: {
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    committer: {
+      name: string;
+      email: string;
+      date: string;
+    };
+    message: string;
+  };
+  author: {
+    login: string;
+    avatar_url: string;
+    html_url: string;
+  } | null;
+  html_url: string;
+}
+
+export interface GitHubCollaborator {
+  login: string;
+  id: number;
+  avatar_url: string;
+  html_url: string;
+  permissions: {
+    admin: boolean;
+    maintain: boolean;
+    push: boolean;
+    triage: boolean;
+    pull: boolean;
+  };
 }

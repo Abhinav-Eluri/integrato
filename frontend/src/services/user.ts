@@ -5,12 +5,12 @@ export class UserService {
   // Profile management
   static async getProfile(): Promise<User> {
     const response = await apiClient.get<User>('/users/profile/');
-    return response.data;
+    return response;
   }
 
   static async updateProfile(data: ProfileFormData): Promise<User> {
     const response = await apiClient.patch<User>('/users/profile/', data);
-    return response.data;
+    return response;
   }
 
   static async uploadAvatar(file: File): Promise<User> {
@@ -22,41 +22,41 @@ export class UserService {
         'Content-Type': 'multipart/form-data',
       },
     });
-    return response.data;
+    return response;
   }
 
   static async deleteAvatar(): Promise<{ message: string }> {
     const response = await apiClient.delete<{ message: string }>('/users/delete_avatar/');
-    return response.data;
+    return response;
   }
 
   // User management
   static async getUserById(id: number): Promise<User> {
     const response = await apiClient.get<User>(`/users/${id}/`);
-    return response.data;
+    return response;
   }
 
   static async searchUsers(query: string): Promise<User[]> {
     const response = await apiClient.get<User[]>(`/users/?search=${encodeURIComponent(query)}`);
-    return response.data;
+    return response;
   }
 
   // Account management
   static async deleteAccount(): Promise<{ message: string }> {
     const response = await apiClient.delete<{ message: string }>('/users/profile/');
-    return response.data;
+    return response;
   }
 
   static async verifyEmail(token: string): Promise<{ message: string }> {
     const response = await apiClient.post<{ message: string }>('/users/verify-email/', {
       token,
     });
-    return response.data;
+    return response;
   }
 
   static async resendVerificationEmail(): Promise<{ message: string }> {
     const response = await apiClient.post<{ message: string }>('/users/resend-verification/');
-    return response.data;
+    return response;
   }
 }
 
