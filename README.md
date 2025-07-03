@@ -593,7 +593,7 @@ REDIS_URL=redis://localhost:6379/0
 ### Frontend (.env)
 ```env
 # API Configuration
-VITE_API_BASE_URL=http://localhost:8001/api
+VITE_API_BASE_URL=http://localhost:8000/api
 
 # Google OAuth (Required for Google login)
 VITE_GOOGLE_CLIENT_ID=your-google-client-id.apps.googleusercontent.com

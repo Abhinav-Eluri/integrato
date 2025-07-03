@@ -8,6 +8,7 @@ urlpatterns = [
     path('api/auth/', include('apps.authentication.urls')),
     path('api/users/', include('apps.users.urls')),
     path('api/integrations/', include('apps.integrations.urls')),
+    path('api/chatbot/', include('apps.chatbot.urls')),
 ]
 
 # Serve media files in development

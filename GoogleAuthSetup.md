@@ -101,7 +101,7 @@ GOOGLE_OAUTH2_CLIENT_SECRET = os.getenv('GOOGLE_OAUTH2_CLIENT_SECRET')
 Your frontend `.env` file should include:
 
 ```env
-VITE_API_BASE_URL=http://localhost:8001/api
+VITE_API_BASE_URL=http://localhost:8000/api
 VITE_GOOGLE_CLIENT_ID=your-client-id-here.apps.googleusercontent.com
 ```
 
@@ -132,7 +132,7 @@ The frontend integration includes:
 1. Start your Django backend server:
    ```bash
    cd backend
-   python manage.py runserver 0.0.0.0:8001
+   python manage.py runserver 0.0.0.0:8000
    ```
 
 2. Start your frontend development server:

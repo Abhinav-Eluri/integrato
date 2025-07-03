@@ -308,7 +308,7 @@ frontend/
 - **Error Handling**: Comprehensive error handling for OAuth failures
 
 #### Frontend Configuration
-- **Environment Variable**: `VITE_API_BASE_URL=http://localhost:8001/api`
+- **Environment Variable**: `VITE_API_BASE_URL=http://localhost:8000/api`
 - **Google OAuth Library**: Integration with `@google-oauth/react` or similar
 - **API Client**: Axios configuration with proper headers
 - **State Management**: User authentication state updates

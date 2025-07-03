@@ -28,6 +28,7 @@ import GitHubRepositoriesPage from '@/pages/integrations/GitHubRepositoriesPage'
 // Components
 import NotificationContainer from '@/components/ui/NotificationContainer';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import Chatbot from '@/components/ui/Chatbot';
 
 const AppContent: React.FC = () => {
   const { theme } = useUI();
@@ -86,6 +87,7 @@ const AppContent: React.FC = () => {
 
         {/* Global Components */}
         <NotificationContainer />
+        <Chatbot />
       </div>
     </Router>
   );
