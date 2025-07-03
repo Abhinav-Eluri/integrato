@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { cn } from '@/utils/cn';
 import Button from './Button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from './Dialog';
@@ -54,6 +54,11 @@ const Chatbot: React.FC<ChatbotProps> = ({ className }) => {
     }
   };
 
+  const handleClearSession = () => {
+    ChatbotService.clearSession();
+    setMessages([]);
+  };
+
   return (
     <>
       {/* Floating Chatbot Button */}
@@ -84,10 +89,24 @@ const Chatbot: React.FC<ChatbotProps> = ({ className }) => {
       <Dialog open={isOpen} onOpenChange={setIsOpen} size="xl">
         <DialogContent className="h-96 flex flex-col">
           <DialogHeader>
-            <DialogTitle>Chat Assistant</DialogTitle>
-            <DialogDescription>
-              Ask me anything! I'm here to help.
-            </DialogDescription>
+            <div className="flex items-center justify-between">
+              <div>
+                <DialogTitle>Chat Assistant</DialogTitle>
+                <DialogDescription>
+                  Ask me anything! I'm here to help.
+                </DialogDescription>
+              </div>
+              {messages.length > 0 && (
+                <Button
+                  onClick={handleClearSession}
+                  variant="outline"
+                  size="sm"
+                  className="text-xs"
+                >
+                  New Chat
+                </Button>
+              )}
+            </div>
           </DialogHeader>
 
           {/* Messages Container */}
