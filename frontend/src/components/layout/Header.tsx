@@ -81,6 +81,13 @@ const Header: React.FC = () => {
               >
                 Email
               </Link>
+              
+              <Link
+                to="/agents"
+                className="text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+              >
+                Agents
+              </Link>
             </nav>
           )}
           {!isAuthenticated && <div className="flex-1"></div>}
@@ -281,6 +288,13 @@ const Header: React.FC = () => {
                     className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
                   >
                     Email
+                  </Link>
+                  <Link
+                    to="/agents"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="block text-gray-700 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors font-medium"
+                  >
+                    Agents
                   </Link>
                   <Link
                     to="/profile"

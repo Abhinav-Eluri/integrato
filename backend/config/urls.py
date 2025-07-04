@@ -9,6 +9,7 @@ urlpatterns = [
     path('api/users/', include('apps.users.urls')),
     path('api/integrations/', include('apps.integrations.urls')),
     path('api/chatbot/', include('apps.chatbot.urls')),
+    path('api/agents/', include('apps.agents.urls')),
 ]
 
 # Serve media files in development

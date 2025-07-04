@@ -24,6 +24,7 @@ import EmailPage from './pages/EmailPage';
 import NotFoundPage from '@/pages/NotFoundPage';
 import CallbackPage from '@/pages/integrations/CallbackPage';
 import GitHubRepositoriesPage from '@/pages/integrations/GitHubRepositoriesPage';
+import AgentsPage from '@/pages/AgentsPage';
 
 // Components
 import NotificationContainer from '@/components/ui/NotificationContainer';
@@ -80,6 +81,7 @@ const AppContent: React.FC = () => {
           <Route path="/integrations/github/repositories" element={<ProtectedRoute><Layout><GitHubRepositoriesPage /></Layout></ProtectedRoute>} />
           <Route path="/calendar" element={<ProtectedRoute><Layout><CalendarPage /></Layout></ProtectedRoute>} />
           <Route path="/email" element={<ProtectedRoute><Layout><EmailPage /></Layout></ProtectedRoute>} />
+          <Route path="/agents" element={<ProtectedRoute><Layout><AgentsPage /></Layout></ProtectedRoute>} />
 
           {/* 404 Page */}
           <Route path="*" element={<NotFoundPage />} />
